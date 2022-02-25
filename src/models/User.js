@@ -1,3 +1,4 @@
+/*eslint-disable*/
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 
@@ -41,6 +42,7 @@ const User = new mongoose.Schema({
     type: String,
     enum: ['vaccin1', 'vaccin2', 'vaccin3'],
   },
+  
   region: {
     type: String,
   },
@@ -67,6 +69,7 @@ const User = new mongoose.Schema({
     required: false,
   },
 }, { timestamps: true });
+
 
 User.pre('save', function (next) {
   const user = this;

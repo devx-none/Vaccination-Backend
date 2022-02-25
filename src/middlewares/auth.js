@@ -93,7 +93,6 @@ const isLoggedIn = (req, res, next) => {
 // User validation
 const validateUser = (defaultErrorMessage = '') => (req, res, next) => {
   console.log(req.body);
-
   const result = userSchema.validate(req.body);
   if (!result.error) {
     next();
@@ -147,7 +146,7 @@ const findUserLogin = (defaultLoginError, isError, errorCode = 422) => async (re
       req.role = fetchedUser.role;
       switch (fetchedUser.role) {
         case 'Admin':
-          req.user = await Admin.findOne({ email: req.body.email }, 'email password');
+          req.user = await Admin.findOne({ email: req.body.email }, 'email password region');
           next();
           break;
         case 'User':

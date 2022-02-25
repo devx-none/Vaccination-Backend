@@ -21,6 +21,7 @@ const login = async (req, res, next) => {
       res.json({
         token: auth.generateAccessToken(req.user, req.role),
         role: [req.role],
+        region:[req.user.region],
       });
     } else {
       res.status(422);
@@ -88,7 +89,7 @@ const vaccinVerify = async (req, res) => {
     } else {
       res.json({
         message: 'You are already vaccinated.',
-        vaccine: getUser.vaccination,
+        vaccine: getUser,
       });
     }
   } catch (err) {
@@ -209,25 +210,22 @@ const deleteOne = async (req, res, next) => {
   }
 };
 
-
-//get statistics 
+// get statistics
 const stats = async (req, res, next) => {
   try {
-    const vaccin1 = await User.countDocuments({vaccination: "vaccin1" }).exec();
-    const vaccin2 = await User.countDocuments({vaccination: "vaccin2" }).exec();
-    const vaccin3 = await User.countDocuments({vaccination: "vaccin3" }).exec();
+    const vaccin1 = await User.countDocuments({ vaccination: 'vaccin1' }).exec();
+    const vaccin2 = await User.countDocuments({ vaccination: 'vaccin2' }).exec();
+    const vaccin3 = await User.countDocuments({ vaccination: 'vaccin3' }).exec();
 
-    res.json({ 
-      vaccin1 ,
+    res.json({
+      vaccin1,
       vaccin2,
-      vaccin3 
-    })
-
-  }catch (error){
+      vaccin3,
+    });
+  } catch (error) {
     next(error);
   }
-}
-
+};
 
 module.exports = {
   get,
@@ -239,5 +237,5 @@ module.exports = {
   updateOne,
   deleteOne,
   vaccinVerify,
-  stats
+  stats,
 };
